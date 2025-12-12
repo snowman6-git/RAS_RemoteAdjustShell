@@ -1,4 +1,4 @@
-use std::{io::Write, net::{TcpListener, TcpStream}, thread};
+use std::{io::Write, net::{TcpListener, TcpStream}, thread, env::args};
 
 fn handle_connection(mut stream: TcpStream){
     let ip = stream.peer_addr();
@@ -39,12 +39,14 @@ fn listen_up(master_addr: &str) -> TcpListener{
 
 fn main() {
     // 리스닝 아이피:포트
+    let args: Vec<String> = args().collect();
     println!("RAS is Loading...");
 
-    const MASTER_IP: &str = "localhost";
-    const MASTER_PORT: &str = "9999";
+    let master_ip = &args[1];
+    let master_port = &args[2];
+
     let master_addr: String = format!(
-        "{MASTER_IP}:{MASTER_PORT}",
+        "{master_ip}:{master_port}",
     );
     println!("RAS is try to open in: '{}'", master_addr);
     
