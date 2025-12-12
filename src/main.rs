@@ -6,7 +6,12 @@ fn handle_connection(mut stream: TcpStream){
     let handshake_msg = stream.write("aa2iswork".as_bytes());
     match handshake_msg {
         Ok(_) => {
-            println!("{}: HandShake Complete!", ip.unwrap())
+            println!("{}: HandShake Complete!", ip.unwrap());
+            loop {
+                let mut msg = String::from("");
+                std::io::stdin().read_line(&mut msg).unwrap();
+                stream.write(msg.as_bytes()).unwrap();
+            }
         },
         Err(er) => {println!("{}: {}", ip.unwrap(), er)}  
     }
